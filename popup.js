@@ -15,13 +15,16 @@ function parseUrlParamsToHash(url) {
   var paramsStartIndex = url.indexOf("?")
 
   if (paramsStartIndex != -1) {
-    var paramValuePairs = url.substring(paramsStartIndex + 1, url.length).split("&")
+    var paramValuePairs = url.substring(paramsStartIndex + 1, url.length).split("&") // ["foo=bar", "ge=ek"]
 
     for (var i = paramValuePairs.length - 1; i >= 0; i--) {
-      var pvp = paramValuePairs[i].split('=');
+      var paramValuePair = paramValuePairs[i].split('=');
 
-      if (pvp.length == 2) {
-        paramsHash[pvp[0]] = (pvp[1] || '');
+      if (paramValuePair.length == 2) {
+        var paramName  = paramValuePair[0];
+        var paramValue = paramValuePair[1] || '';
+
+        paramsHash[paramName] = paramValue;
       }
     };
   }
@@ -33,7 +36,8 @@ function createUrlWithParamsFromHash(url, paramsHash) {
   var paramsStartIndex = url.indexOf("?");
 
   if (paramsStartIndex != -1) {
-    url = url.replace(url.substring(paramsStartIndex, url.length), "");
+    var paramsSubstring = url.substring(paramsStartIndex, url.length);
+    url = url.replace(paramsSubstring, "");
   }
 
   url = url + "?";
@@ -42,10 +46,12 @@ function createUrlWithParamsFromHash(url, paramsHash) {
     url = url + paramName + "=" + paramsHash[paramName] + "&";
   }
 
+  url = url.substring(0, url.length -1) //remove last &
+
   return url;
 };
 
-function updateTabUrl(tab, paramName, newParamValue) {
+function updateTabUrlWithNewParam(tab, paramName, newParamValue) {
   var paramsHash = parseUrlParamsToHash(tab.url);
   paramsHash[paramName] = newParamValue;
 
@@ -61,7 +67,7 @@ function onFormSubmit() {
 
   if (paramName.length > 0) {
     getCurrentTab(function(tab) {
-      updateTabUrl(tab, paramName, paramValueEl.value);
+      updateTabUrlWithNewParam(tab, paramName, paramValueEl.value);
     });
   } else {
     paramNameEl.style.background = "red";
