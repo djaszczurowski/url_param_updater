@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "UrlParamUpdater",
   "description": "This extension enables you to update/add/remove url param value. Useful when working with long urls.",
   "browser_action": {
