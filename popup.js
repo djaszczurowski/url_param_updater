@@ -53,7 +53,12 @@ function createUrlWithParamsFromHash(url, paramsHash) {
 
 function updateTabUrlWithNewParam(tab, paramName, newParamValue) {
   var paramsHash = parseUrlParamsToHash(tab.url);
-  paramsHash[paramName] = newParamValue;
+
+  if (newParamValue.length > 0) {
+    paramsHash[paramName] = newParamValue;
+  } else {
+    delete(paramsHash[paramName]);
+  }
 
   var newUrl = createUrlWithParamsFromHash(tab.url, paramsHash);
 
