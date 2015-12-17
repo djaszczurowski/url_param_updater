@@ -1,6 +1,6 @@
-PARAM_ID = 'param';
-VALUE_ID = 'value';
-FORM_ID  = 'form';
+PARAM_NAME_EL_ID  = 'param-name';
+PARAM_VALUE_EL_ID = 'param-value';
+PARAM_FORM_EL_ID  = 'param-form';
 
 function getCurrentTab(callback) {
   var queryInfo = { active: true, currentWindow: true };
@@ -61,8 +61,8 @@ function updateTabUrlWithNewParam(tab, paramName, newParamValue) {
 }
 
 function onFormSubmit() {
-  var paramNameEl = document.getElementById(PARAM_ID);
-  var paramValueEl = document.getElementById(VALUE_ID);
+  var paramNameEl = document.getElementById(PARAM_NAME_EL_ID);
+  var paramValueEl = document.getElementById(PARAM_VALUE_EL_ID);
   var paramName = paramNameEl.value;
 
   if (paramName.length > 0) {
@@ -75,6 +75,6 @@ function onFormSubmit() {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById(PARAM_ID).focus();
-  document.getElementById(FORM_ID).onsubmit = onFormSubmit;
+  document.getElementById(PARAM_NAME_EL_ID).focus();
+  document.getElementById(PARAM_FORM_EL_ID).onsubmit = onFormSubmit;
 });
