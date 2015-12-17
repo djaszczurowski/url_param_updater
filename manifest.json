@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "version": "0.0.1",
   "name": "UrlParamUpdater",
-  "description": "This extension enables you to update/add/remove url param value. Especially useful when working with long urls which do have a big number of params. Very handy if a shortcut is assigned.",
+  "description": "This extension enables you to update/add/remove url param value. Useful when working with long urls.",
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
@@ -12,5 +12,5 @@
   	"48": "icon48.png",
   	"128": "icon128.png"
   },
-  "permissions": ["tabs"]
+  "permissions": ["tabs", "storage"]
 }

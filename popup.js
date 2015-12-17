@@ -1,6 +1,7 @@
 PARAM_NAME_EL_ID  = 'param-name';
 PARAM_VALUE_EL_ID = 'param-value';
 PARAM_FORM_EL_ID  = 'param-form';
+LAST_PARAM_STORAGE_NAME = 'last-param-name';
 
 function getCurrentTab(callback) {
   var queryInfo = { active: true, currentWindow: true };
@@ -73,13 +74,32 @@ function onFormSubmit() {
   if (paramName.length > 0) {
     getCurrentTab(function(tab) {
       updateTabUrlWithNewParam(tab, paramName, paramValueEl.value);
+      saveLastParamName(paramName);
     });
   } else {
     paramNameEl.style.background = "red";
   }
 };
 
+function saveLastParamName(paramName) {
+  var toSave = {};
+  toSave[LAST_PARAM_STORAGE_NAME] = paramName;
+
+  chrome.storage.local.set(toSave)
+};
+
+function loadLastParamName() {
+  chrome.storage.local.get(LAST_PARAM_STORAGE_NAME, function(result) {
+    value = result[LAST_PARAM_STORAGE_NAME] || '';
+
+    if (value.length > 0) {
+      document.getElementById(PARAM_NAME_EL_ID).value = value;      
+    }
+  })
+};
+
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById(PARAM_NAME_EL_ID).focus();
   document.getElementById(PARAM_FORM_EL_ID).onsubmit = onFormSubmit;
+  loadLastParamName();
 });
